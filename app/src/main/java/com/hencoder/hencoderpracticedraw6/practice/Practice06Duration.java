@@ -1,5 +1,6 @@
 package com.hencoder.hencoderpracticedraw6.practice;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -11,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.hencoder.hencoderpracticedraw6.R;
+import com.hencoder.hencoderpracticedraw6.Utils;
 
 public class Practice06Duration extends LinearLayout {
     SeekBar durationSb;
@@ -65,7 +67,24 @@ public class Practice06Duration extends LinearLayout {
             @Override
             public void onClick(View v) {
                 // TODO 在这里处理点击事件，执行动画。记得使用 `setDuration(duration)` 来设置动画的时长。
+                switch (state) {
+                    case 0:
+                        final ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationX", Utils.dpToPixel(100));
+                        animator.setDuration(duration);
+                        animator.start();
+                        break;
+                    case 1:
+                        imageView.animate().translationX(0).setDuration(duration);
+                        break;
+                }
+                state++;
+                if (state == count) {
+                    state = 0;
+                }
             }
         });
     }
+
+    private int state = 0;
+    private int count = 2;
 }
